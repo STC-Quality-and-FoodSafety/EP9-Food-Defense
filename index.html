@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA Sharing EP.09 · Food Defense | Siam Tohcello</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@500;600;700;800&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#14285C;
+  --navy-2:#22407F;
+  --red:#D7262E;
+  --red-soft:#FDECEC;
+  --yellow:#FFC531;
+  --yellow-soft:#FFF6D9;
+  --sky:#E7F0FF;
+  --paper:#F6F9FF;
+  --ink:#1B2333;
+  --muted:#5A6478;
+  --line:#D5DEEE;
+  --green:#169A62;
+  --green-soft:#E3F6EC;
+  --head:'Prompt','IBM Plex Sans Thai Looped',sans-serif;
+  --body:'IBM Plex Sans Thai Looped','Prompt',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+button,select,input{font-family:inherit;font-size:inherit}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+
+/* ---------- HERO ---------- */
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(135deg,transparent 0 22px,rgba(255,255,255,.035) 22px 44px);pointer-events:none}
+.hero-inner{max-width:980px;margin:0 auto;padding:28px 20px 34px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;position:relative}
+.brand{font-family:var(--head);font-weight:700;font-size:15px;color:#B9C8EA;margin-bottom:14px}
+.brand b{color:#fff;font-weight:800;font-size:20px;margin-right:8px}
+.hero h1{font-family:var(--head);font-weight:800;font-size:clamp(34px,6vw,58px);line-height:1.3;letter-spacing:-.5px}
+.h1th{display:block;font-size:.62em;line-height:1.45;margin-top:6px;color:#fff}
+.nw{white-space:nowrap;display:inline-block}
+.hero p.lead{margin-top:12px;font-size:18px;color:#DCE5F7;max-width:520px}
+.hero-meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;font-size:14.5px;font-weight:600;background:rgba(255,255,255,.12);color:#fff}
+.chip.due{background:var(--red)}
+
+/* visitor badge — signature element */
+.badge{width:200px;background:#fff;color:var(--ink);border-radius:14px;padding:30px 16px 16px;position:relative;transform:rotate(4deg);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.badge::before{content:"";position:absolute;top:12px;left:50%;width:44px;height:8px;margin-left:-22px;border-radius:6px;background:var(--navy)}
+.badge-top{background:var(--yellow);margin:0 -16px;padding:6px 0;text-align:center;font-family:var(--head);font-weight:800;font-size:20px;letter-spacing:2px;color:var(--navy)}
+.badge-ep{font-family:var(--head);font-weight:800;font-size:54px;line-height:1;text-align:center;color:var(--red);margin-top:12px}
+.badge-sub{text-align:center;font-family:var(--head);font-weight:600;font-size:16px;margin-top:2px}
+.badge-line{border-top:1px dashed var(--line);margin:12px 0 8px}
+.badge-foot{font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
+
+/* ---------- TABS ---------- */
+.tabs{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+.tabs-inner{max-width:980px;margin:0 auto;display:flex;gap:4px;padding:0 12px}
+.tab-btn{flex:1;background:none;border:0;padding:14px 10px 12px;font-family:var(--head);font-weight:600;font-size:17px;color:var(--muted);cursor:pointer;border-bottom:4px solid transparent}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--red)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+.wrap{max-width:820px;margin:0 auto;padding:32px 20px 64px}
+
+/* ---------- CONTENT ---------- */
+.sec{margin-bottom:46px}
+.sec h2{font-family:var(--head);font-weight:700;font-size:26px;color:var(--navy);line-height:1.35;margin-bottom:12px}
+.sec h3{font-family:var(--head);font-weight:600;font-size:19px;color:var(--navy);margin:20px 0 8px}
+.sec p{margin-bottom:10px}
+.ref{font-size:14px;color:var(--muted)}
+.def{background:#fff;border-left:6px solid var(--navy);border-radius:4px 12px 12px 4px;padding:18px 20px;font-size:18px}
+.def strong{color:var(--red)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.pair div{background:var(--sky);border-radius:12px;padding:14px 16px;font-size:16px}
+.pair b{display:block;font-family:var(--head);color:var(--navy);font-size:17px}
+
+.threats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:8px}
+.threat{background:var(--red-soft);border-radius:12px;padding:14px 16px;font-size:16px}
+.threat b{font-family:var(--head);font-weight:600;display:block;color:var(--red)}
+
+.zones{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.zone{background:#fff;border:1px solid var(--line);border-radius:8px;padding:4px 11px;font-size:15px}
+.zone.out{border-color:#F3C3C5;background:var(--red-soft)}
+
+/* matrix */
+.matrix-box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+.matrix{display:grid;grid-template-columns:110px repeat(4,1fr);gap:5px}
+.mx-h{font-size:13px;color:var(--muted);line-height:1.35;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px}
+.mx-cell{border:0;border-radius:8px;min-height:52px;font-family:var(--head);font-weight:700;font-size:22px;cursor:pointer;color:var(--ink)}
+.mx-cell.hi{background:#F2A0A3}
+.mx-cell.md{background:#FFE08A}
+.mx-cell.lo{background:#B7E6CC}
+.mx-cell.sel{outline:3px solid var(--navy);outline-offset:1px}
+.mx-out{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--sky);font-size:16px;min-height:52px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:14.5px}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.lg-lo::before{background:#B7E6CC}.lg-md::before{background:#FFE08A}.lg-hi::before{background:#F2A0A3}
+
+.steps{list-style:none;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:0 0 14px 46px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--head);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+.steps li::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+
+.spot{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.spot div{background:var(--yellow-soft);border-radius:12px;padding:14px;font-size:15.5px}
+.spot b{font-family:var(--head);display:block;color:var(--navy)}
+
+.branch{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 18px}
+.branch div{border-radius:12px;padding:14px 16px;font-size:16px}
+.branch .clear{background:var(--red-soft);border:1px solid #F3C3C5}
+.branch .unclear{background:var(--yellow-soft);border:1px solid #F5DF9A}
+.branch b{font-family:var(--head);display:block}
+
+.freq{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:15.5px}
+.freq th,.freq td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.freq th{background:var(--navy);color:#fff;font-family:var(--head);font-weight:600}
+.table-scroll{overflow-x:auto}
+
+.cta{display:block;width:100%;max-width:340px;margin:10px auto 0;padding:15px;border:0;border-radius:12px;background:var(--red);color:#fff;font-family:var(--head);font-weight:700;font-size:18px;cursor:pointer}
+.cta:hover{background:#B91E25}
+
+/* ---------- QUIZ ---------- */
+.quiz-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.quiz-head h2{font-family:var(--head);font-weight:700;font-size:26px;color:var(--navy)}
+.quiz-head span{font-size:15px;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}
+.card h3{font-family:var(--head);font-weight:600;font-size:19px;color:var(--navy);margin-bottom:14px}
+label.lbl{display:block;font-size:14.5px;font-weight:600;color:var(--muted);margin-bottom:5px}
+select,input[type=text]{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-size:16.5px}
+input[readonly]{background:var(--paper)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.err{color:var(--red);font-size:14.5px;margin-top:6px;display:none}
+.btn-main{margin-top:18px;width:100%;padding:14px;border:0;border-radius:12px;background:var(--navy);color:#fff;font-family:var(--head);font-weight:700;font-size:18px;cursor:pointer}
+.btn-main:hover{background:var(--navy-2)}
+.btn-main:disabled{background:#AEB8CC;cursor:not-allowed}
+
+.emp-banner{display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--navy);color:#fff;border-radius:14px;padding:14px 18px;margin-bottom:18px}
+.emp-banner .n{font-family:var(--head);font-weight:600;font-size:18px}
+.emp-banner .s{font-size:14.5px;color:#C9D5EE}
+.edit-btn{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:15px}
+
+#quiz-area{display:none}
+.progress{height:8px;border-radius:8px;background:var(--line);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--red);width:0;transition:width .3s}
+.dots{display:flex;gap:8px;margin:14px 0 18px}
+.dot{width:40px;height:40px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-family:var(--head);font-weight:600;cursor:pointer;color:var(--muted)}
+.dot.done{background:var(--sky);border-color:var(--navy-2);color:var(--navy)}
+.dot.cur{border-color:var(--red);border-width:2.5px;color:var(--red)}
+.q-meta{font-size:15px;color:var(--muted)}
+.q-text{font-family:var(--head);font-weight:600;font-size:21px;line-height:1.55;margin:4px 0 16px;color:var(--ink)}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;font-size:16.5px;line-height:1.6;color:var(--ink)}
+.opt:hover{border-color:var(--navy-2)}
+.opt .L{flex:0 0 34px;height:34px;border-radius:9px;background:var(--sky);color:var(--navy);font-family:var(--head);font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center}
+.opt.picked{border-color:var(--navy);background:#F1F5FF}
+.opt.picked .L{background:var(--navy);color:#fff}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:10px}
+.nav-btn{padding:10px 18px;border-radius:10px;border:1.5px solid var(--line);background:#fff;cursor:pointer;font-size:15.5px;font-weight:600;color:var(--navy)}
+.nav-btn:disabled{opacity:.4;cursor:not-allowed}
+.count{font-size:15px;color:var(--muted)}
+
+#result{display:none;text-align:center;padding:34px 22px 28px}
+.r-emblem{width:108px;height:108px;margin:0 auto 6px;position:relative}
+.r-emblem svg{width:100%;height:100%}
+.r-score{font-family:var(--head);font-weight:800;font-size:64px;line-height:1.1;letter-spacing:-1px}
+.r-score.pass{color:var(--navy)}
+.r-score.fail{color:var(--tier,var(--red))}
+.r-chip{display:inline-block;margin-top:8px;padding:5px 16px;border-radius:999px;background:var(--sky);border:1.5px solid #BFD3F5;color:var(--navy-2);font-family:var(--head);font-weight:600;font-size:14.5px}
+.r-msg{margin-top:16px;font-size:17.5px;line-height:1.7;color:var(--ink)}
+.r-msg b{font-family:var(--head);font-weight:700;color:var(--navy);font-size:19px}
+.r-token{display:inline-flex;align-items:center;gap:16px;margin-top:22px;padding:18px 30px 18px 22px;border-radius:18px;background:var(--yellow-soft);border:2.5px solid var(--yellow);box-shadow:0 8px 22px rgba(255,197,49,.28);text-align:left}
+.r-token svg{width:58px;height:58px;flex:none}
+.r-token .t1{font-family:var(--head);font-weight:800;font-size:26px;color:var(--navy);line-height:1.2}
+.r-token .t2{font-size:14px;font-weight:600;color:#8A6400}
+.save{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;padding:16px;border-radius:14px;font-family:var(--head);font-weight:600;font-size:16.5px}
+.save .ic{width:22px;height:22px}
+.save.wait{background:var(--sky);color:var(--navy);border:1.5px solid #BFD3F5}
+.save.done{background:var(--green-soft);color:#0F7A4C;border:1.5px solid #9ED9BC}
+.save.warn{background:var(--yellow-soft);color:#7A5A00;border:1.5px solid #F5DF9A}
+.spin{width:18px;height:18px;border:3px solid #BFD3F5;border-top-color:var(--navy);border-radius:50%;animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.r-meter{display:flex;justify-content:center;gap:6px;margin-top:12px}
+.r-meter i{width:34px;height:8px;border-radius:6px;background:var(--line)}
+.r-meter i.on{background:var(--tier,#169A62)}
+.r-retry-note{display:flex;gap:12px;align-items:flex-start;text-align:left;max-width:520px;margin:20px auto 0;padding:14px 16px;border-radius:14px;background:var(--sky);border:1.5px dashed var(--navy-2);font-size:15.5px;line-height:1.65}
+.r-retry-note .ic{color:var(--navy);margin-top:2px}
+.r-retry-note b{font-family:var(--head);color:var(--navy)}
+.res-actions{display:flex;justify-content:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+.btn-retry{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:12px;border:1.5px solid var(--line);background:#F1F5FF;color:var(--navy);font-family:var(--head);font-weight:600;font-size:16.5px;cursor:pointer}
+.btn-retry:hover{border-color:var(--navy-2)}
+.btn-retry.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn-retry .ic{width:20px;height:20px}
+.btn-ghost{margin-top:18px;padding:14px;border-radius:12px;border:1.5px solid var(--navy);background:#fff;color:var(--navy);font-family:var(--head);font-weight:600;font-size:17px;cursor:pointer}
+
+footer{background:var(--navy);color:#B9C8EA;text-align:center;padding:18px;font-size:14px}
+
+
+/* ---------- ICONS ---------- */
+.ic{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.sm{width:18px;height:18px;vertical-align:-3px;margin-right:6px}
+.ib{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#fff;color:var(--navy);margin-bottom:8px}
+.ib.r{color:var(--red)}.ib.y{color:#9A6B00}.ib.g{color:var(--green)}
+.sec h2.hi{display:flex;align-items:center;gap:12px}
+.sec h2.hi .tile{flex:none;width:46px;height:46px;border-radius:13px;background:var(--navy);color:var(--yellow);display:inline-flex;align-items:center;justify-content:center}
+.sec h2.hi .tile .ic{width:26px;height:26px}
+.sec h3 .ic{width:20px;height:20px;vertical-align:-4px;margin-right:6px;color:var(--red)}
+.steps .ic.sm{color:var(--navy-2)}
+.freq td:first-child{padding-left:42px;position:relative}
+.freq td:first-child .ic{position:absolute;left:12px;top:13px;color:var(--red);width:20px;height:20px}
+.callout{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.callout .ic{color:var(--navy);margin-top:3px}
+
+@media (max-width:700px){
+  body{font-size:16.5px}
+  .hero-inner{grid-template-columns:1fr}
+  .badge{display:none}
+  .pair,.branch,.row2{grid-template-columns:1fr}
+  .threats{grid-template-columns:1fr}
+  .spot{grid-template-columns:1fr}
+  .matrix{grid-template-columns:72px repeat(4,1fr)}
+  .mx-h{font-size:11.5px}
+  .mx-cell{min-height:44px;font-size:18px}
+  .q-text{font-size:19px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol><symbol id="i-shieldcheck" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol><symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7 15h10"/></symbol><symbol id="i-filelock" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><rect x="9" y="14" width="6" height="4" rx="1"/><path d="M10 14v-1.5a2 2 0 0 1 4 0V14"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M1 4h14v12H1z"/><path d="M15 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol><symbol id="i-factory" viewBox="0 0 24 24"><path d="M2 20V9l6 4V9l6 4V4h8v16z"/><path d="M2 20h20"/><path d="M17 8h2"/></symbol><symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s-8-6-8-12a8 8 0 0 1 16 0c0 6-8 12-8 12z"/><circle cx="12" cy="10" r="3"/></symbol><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></symbol><symbol id="i-idcard" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M14 10h4M14 14h4"/><path d="M5 17c.5-1.4 1.6-2 3-2s2.5.6 3 2"/></symbol><symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol><symbol id="i-tag" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M10 4V2h4v2"/><circle cx="12" cy="11" r="2.5"/><path d="M8.5 18c.6-1.6 1.8-2.3 3.5-2.3s2.9.7 3.5 2.3"/></symbol><symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/><path d="M9 21l2-6 3 3v3"/><path d="M7 11l3-3 4 1 2 4"/><path d="M11 15l1-5"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol><symbol id="i-shirt" viewBox="0 0 24 24"><path d="M20.4 6.5L16 3a4 4 0 0 1-8 0L3.6 6.5a1 1 0 0 0-.2 1.3l1.9 2.9a1 1 0 0 0 1.2.4L8 10v10a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V10l1.5 1.1a1 1 0 0 0 1.2-.4l1.9-2.9a1 1 0 0 0-.2-1.3z"/></symbol><symbol id="i-userq" viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6"/><path d="M17 14.5a2 2 0 1 1 2.6 1.9c-.4.2-.6.5-.6 1.1"/><path d="M19 21h.01"/></symbol><symbol id="i-belloff" viewBox="0 0 24 24"><path d="M13.7 21a2 2 0 0 1-3.4 0"/><path d="M18 8a6 6 0 0 0-9.3-5"/><path d="M6 8c0 7-3 9-3 9h14"/><path d="M18 13c.3 1.6.9 3 2 4"/><path d="M2 2l20 20"/></symbol><symbol id="i-octagon" viewBox="0 0 24 24"><path d="M7.9 2h8.2L22 7.9v8.2L16.1 22H7.9L2 16.1V7.9z"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol><symbol id="i-siren" viewBox="0 0 24 24"><path d="M7 18v-6a5 5 0 0 1 10 0v6"/><path d="M5 18h14v3H5z"/><path d="M12 2v2M4.2 5.2l1.4 1.4M19.8 5.2l-1.4 1.4"/></symbol><symbol id="i-clip" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 14l2 2 4-4"/></symbol><symbol id="i-cam" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M22 8l-6 4 6 4z"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></symbol><symbol id="i-finger" viewBox="0 0 24 24"><path d="M12 11v5"/><path d="M8.5 13a3.5 3.5 0 0 1 7 0v2"/><path d="M6 14a6 6 0 0 1 12 0v1"/><path d="M8 20c.8-1.3 1-2.8 1-4"/><path d="M15.5 19.5c.3-1 .5-2.1.5-3.5"/><path d="M4 11a8 8 0 0 1 16 0"/></symbol><symbol id="i-cloudok" viewBox="0 0 24 24"><path d="M17.5 19H7a5 5 0 1 1 1.6-9.7A6 6 0 0 1 20 11a4 4 0 0 1-2.5 8z"/><path d="M9.5 14l2 2 3.5-3.5"/></symbol></svg>
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="brand"><b>STC</b>QA Sharing · Siam Tohcello Co., Ltd.</div>
+      <h1>Food Defense<span class="h1th"><span class="nw">มาตรการป้องกัน</span><span class="nw">การก่อการร้าย</span><span class="nw">ทางบรรจุภัณฑ์อาหาร</span></span></h1>
+      <p class="lead">อ่านเนื้อหาให้ครบ แล้วทำแบบทดสอบ 5 ข้อ ตอบถูกครบทุกข้อรับ <span class="nw">5 Token</span></p>
+      <div class="hero-meta">
+        <span class="chip">อ้างอิง WPD-SHE-025 Rev.02</span>
+      </div>
+    </div>
+    <div class="badge" aria-hidden="true">
+      <div class="badge-top">VISITOR</div>
+      <div class="badge-ep">EP.09</div>
+      <div class="badge-sub">QA Quiz of the Month</div>
+      <div class="badge-line"></div>
+      <div class="badge-foot">ติดบัตรในจุด<br>ที่มองเห็นได้ชัดเจน</div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner" role="tablist">
+    <button class="tab-btn active" id="btn-learn" role="tab" onclick="switchTab('learn')">📖 เนื้อหา</button>
+    <button class="tab-btn" id="btn-quiz" role="tab" onclick="switchTab('quiz')">📝 แบบทดสอบ</button>
+  </div>
+</nav>
+
+<!-- ================= LEARN ================= -->
+<main class="tab-content active" id="tab-learn">
+<div class="wrap">
+
+  <section class="sec">
+    <h2 class="hi"><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span>Food Defense คืออะไร</h2>
+    <div class="def">
+      กระบวนการที่จะป้องกัน <strong>การเจตนาก่อการร้ายทางบรรจุภัณฑ์อาหาร</strong> ตลอดห่วงโซ่อาหาร
+      จาก <strong>ทั้งบุคคลภายในและบุคคลภายนอก</strong> จากทุกรูปแบบที่เกิดจากแรงกระตุ้นทางด้านพื้นฐานพฤติกรรมและสังคมอย่างตั้งใจ
+      ที่อาจส่งผลกระทบต่อสุขภาพของผู้บริโภค ประกอบด้วยสองส่วน ได้แก่ Food Safety และ Food Security
+    </div>
+    <div class="pair">
+      <div><span class="ib "><svg class="ic" aria-hidden="true"><use href="#i-shieldcheck"/></svg></span><b>Food Safety</b>การป้องกันให้บรรจุภัณฑ์อาหารปลอดภัยจากการปนเปื้อนอันตรายโดยเจตนา (Intentional Adulteration)</div>
+      <div><span class="ib "><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><b>Food Security</b>การป้องกันภัยคุกคามต่อทรัพย์สินและคน ซึ่งบางเหตุการณ์จะส่งผลกระทบต่ออาหารในด้านความปลอดภัย ต่อการปนเปื้อนโดยเจตนา</div>
+    </div>
+    <p class="ref" style="margin-top:12px">หมายเหตุ: การประเมินความเสี่ยงระหว่างกระบวนการผลิต ได้ถูกประเมินใน HACCP Plan หัวข้อ Malicious เรียบร้อยแล้ว (WPD ข้อ 6.7)</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="hi"><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg></span>วัตถุประสงค์ของมาตรการ</h2>
+    <div class="threats">
+      <div class="threat"><span class="ib r"><svg class="ic" aria-hidden="true"><use href="#i-flask"/></svg></span><b>การปนเปื้อนโดยเจตนา</b>รักษาความปลอดภัยของบรรจุภัณฑ์อาหาร และความปลอดภัยของผลิตภัณฑ์ตลอดห่วงโซ่อาหาร</div>
+      <div class="threat"><span class="ib r"><svg class="ic" aria-hidden="true"><use href="#i-filelock"/></svg></span><b>การเข้ามาสืบความลับของบริษัท</b>สร้างความมั่นใจในการรักษาข้อมูล ความลับ และทรัพย์สิน</div>
+      <div class="threat"><span class="ib r"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg></span><b>การก่อความไม่สงบและการก่อการร้าย</b>ป้องกันเหตุร้ายอื่น ๆ ที่อาจเกิดแก่บริษัท</div>
+      <div class="threat"><span class="ib r"><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg></span><b>ภัยในห่วงโซ่อุปทาน</b>เช่น การขนส่งวัตถุดิบจากผู้ผลิตมายังโรงงาน และการขนส่งสินค้าจากโรงงานไปยังลูกค้า</div>
+    </div>
+    <p class="ref" style="margin-top:10px">อ้างอิง WPD ข้อ 1 วัตถุประสงค์ และข้อ 6.7</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="hi"><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></span>จุดเสี่ยง 27 จุดของ STC</h2>
+    <p>ตัวแทนฝ่ายบริหาร หัวหน้าแผนกเจ้าของพื้นที่ เจ้าหน้าที่ควบคุมเอกสาร และเจ้าหน้าที่สารสนเทศ รวบรวมจุดเสี่ยงภายในและนอกโรงงาน เรื่องความปลอดภัยของผลิตภัณฑ์สำเร็จรูป ชีวิต ทรัพย์สิน ข้อมูล และความลับ</p>
+    <h3><svg class="ic" aria-hidden="true"><use href="#i-factory"/></svg>ภายในโรงงาน</h3>
+    <div class="zones">
+      <span class="zone">ป้อม รปภ.</span><span class="zone">สำนักงาน</span><span class="zone">โรงอาหาร</span>
+      <span class="zone">ห้องไอที (IT Server)</span><span class="zone">ห้องน้ำพนักงาน</span><span class="zone">ห้องล็อกเกอร์</span>
+      <span class="zone">พื้นที่การผลิตและบรรจุ</span><span class="zone">คลังสินค้า</span><span class="zone">ที่เก็บและจ่ายน้ำ (RO)</span>
+      <span class="zone">ระบบอัดอากาศ</span><span class="zone">ระบบไฟฟ้า (MDB Room)</span><span class="zone">พื้นที่เก็บวัตถุดิบ (RM Tent)</span>
+      <span class="zone">พื้นที่โหลดเม็ดพลาสติก (Sea bulk)</span><span class="zone">ห้องเรซิน</span><span class="zone">พื้นที่จอดรถโหลดสินค้า (Loading FG)</span>
+      <span class="zone">ที่รวบรวมขยะและของเสีย</span><span class="zone">ห้องควบคุมคุณภาพและเก็บสารเคมี (QC Lab)</span><span class="zone">ช็อปช่างและเก็บสารเคมี</span>
+      <span class="zone">ที่เก็บแก๊สและเตาเผา (LPG)</span><span class="zone">Shop spare part</span><span class="zone">ลานจอดรถ (Parking Area) และพื้นที่แพ็คสินค้า (Packing Area)</span>
+    </div>
+    <h3><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg>การขนส่งและพื้นที่ภายนอก</h3>
+    <div class="zones">
+      <span class="zone out">ขนส่งวัตถุดิบจากผู้ผลิตมายังโรงงาน</span><span class="zone out">ขนส่งสินค้าจากโรงงานไปยังลูกค้า</span>
+      <span class="zone out">ขนส่งวัตถุดิบไปคลังภายนอก</span><span class="zone out">ขนส่งสินค้าไปคลังภายนอก</span>
+      <span class="zone out">พื้นที่เก็บสินค้าภายนอก</span><span class="zone out">พื้นที่เก็บวัตถุดิบภายนอก</span>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="hi"><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-grid"/></svg></span>ตารางประเมินความเสี่ยง</h2>
+    <p>คะแนนความเสี่ยง = <b>โอกาสเข้าถึงพื้นที่</b> × <b>ความรุนแรง</b> แตะช่องในตารางเพื่อดูผล</p>
+    <div class="matrix-box">
+      <div class="matrix" id="matrix"></div>
+      <div class="mx-out" id="mx-out">เลือกช่องในตารางเพื่อดูความหมาย</div>
+      <div class="legend"><span class="lg-lo">1–3 ต่ำ</span><span class="lg-md">4–6 ปานกลาง</span><span class="lg-hi">8–16 สูง = พื้นที่หวงห้าม (Restricted area)</span></div>
+    </div>
+    <p class="ref" style="margin-top:10px">ผลบันทึกใน FRM-SHE-089 (TACCP) และนำไปวางกล้อง CCTV ตาม STD-SHE-011 · ปรับปรุงข้อมูลทุก 1 ปี หรือทุกครั้งที่ได้รับการแจ้งเหตุอันตราย</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="hi"><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-idcard"/></svg></span>ผู้มาติดต่อจากภายนอก ต้องผ่านขั้นตอนนี้</h2>
+    <ol class="steps">
+      <li><svg class="ic sm" aria-hidden="true"><use href="#i-msg"/></svg>แจ้ง รปภ. ว่ามาติดต่อเรื่องอะไร และจะพบใคร</li>
+      <li><svg class="ic sm" aria-hidden="true"><use href="#i-idcard"/></svg>แลก <b>บัตรที่มีรูปถ่าย</b> (บัตรประชาชน ใบขับขี่ พาสปอร์ต) กับบัตร VISITOR และกรอก FRM-SHE-081 หรือแบบ electronic</li>
+      <li><svg class="ic sm" aria-hidden="true"><use href="#i-tag"/></svg>ติดบัตรในจุดที่มองเห็นได้ชัดเจน กรณีผู้เยี่ยมชม เจ้าหน้าที่บุคคลหรือผู้ได้รับมอบหมายชี้แจงกฎระเบียบด้านสุขลักษณะส่วนบุคคล</li>
+      <li><svg class="ic sm" aria-hidden="true"><use href="#i-walk"/></svg>เข้าพื้นที่เสี่ยงได้กับพนักงานบริษัทที่ติดต่อประสานงานหรือผู้ได้รับมอบหมายเท่านั้น และกำกับดูแลเป็นระยะ</li>
+      <li><svg class="ic sm" aria-hidden="true"><use href="#i-pen"/></svg>เมื่อเสร็จธุระ ผู้มีอำนาจระดับหัวหน้างานขึ้นไป หรือผู้ที่ทำการติดต่อของหน่วยงาน เซ็นอนุมัติใน FRM-SHE-081 แล้วส่งคืนแบบฟอร์มพร้อมบัตร</li>
+    </ol>
+    <p class="ref">ไม่มีบัตรที่มีรูปถ่าย → รปภ. แจ้งผู้จัดการฝ่ายต้นสังกัดของบุคคลที่ต้องการพบเพื่อพิจารณาตัดสินใจ · รปภ. บันทึกทะเบียนยานพาหนะของบุคคลภายนอก และมีสิทธิ์ตรวจค้นยานพาหนะทุกคันที่เข้ามา</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="hi"><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></span>การเข้าพื้นที่สายการผลิต (พื้นที่สีแดง)</h2>
+    <div class="callout"><svg class="ic" aria-hidden="true"><use href="#i-finger"/></svg><div>ทางเข้าสายการผลิตมีป้าย "พื้นที่หวงห้าม ห้ามเข้าก่อนได้รับอนุญาต" พื้นที่เสี่ยงใช้เครื่องสแกนนิ้ว ถ้าไม่มีเครื่องหรือเครื่องมีปัญหา ให้บันทึกเข้า-ออกใน FRM-SHE-088</div></div>
+    <p>พนักงานต่างแผนกเข้าได้เมื่อได้รับอนุญาตจากเจ้าของงานหรือเจ้าของพื้นที่ และกำกับดูแลเป็นระยะ หากบุคคลภายนอกแอบหลบเข้าสู่สายการผลิต พนักงานในแผนกสังเกตได้จาก</p>
+    <div class="spot">
+      <div><span class="ib y"><svg class="ic" aria-hidden="true"><use href="#i-shirt"/></svg></span><b>สีเสื้อผ้า</b>แตกต่างจากชุดเสื้อผ้าของบริษัท</div>
+      <div><span class="ib y"><svg class="ic" aria-hidden="true"><use href="#i-userq"/></svg></span><b>รูปร่างหน้าตา</b>ไม่เคยรู้จัก เพราะไม่ได้เป็นพนักงานประจำ</div>
+      <div><span class="ib y"><svg class="ic" aria-hidden="true"><use href="#i-belloff"/></svg></span><b>ไม่มีการแจ้ง</b>HR หรือผู้บังคับบัญชาในแผนกไม่ได้แจ้งว่าจะมีผู้เยี่ยมชม</div>
+    </div>
+    <p style="margin-top:12px">พบแล้ว <b>ไม่อนุญาตให้เข้าพื้นที่ และนำตัวส่ง รปภ.</b> เพื่อดำเนินการต่อ</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="hi"><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-siren"/></svg></span>เมื่อพบเหตุหรือความเสี่ยง</h2>
+    <div class="branch">
+      <div class="clear"><span class="ib r"><svg class="ic" aria-hidden="true"><use href="#i-octagon"/></svg></span><b>พบหลักฐานชัดเจน</b>ระงับเหตุทันที และจำกัดปัญหา</div>
+      <div class="unclear"><span class="ib y"><svg class="ic" aria-hidden="true"><use href="#i-help"/></svg></span><b>หลักฐานไม่ชัด แต่มีความเสี่ยง</b>หยุดกิจกรรมทันที และจำกัดปัญหา</div>
+    </div>
+    <ol class="steps">
+      <li>รีบแจ้งหัวหน้างาน หรือสมาชิก Food Defense และแจ้งให้หัวหน้าทีม Food Defense รับทราบ</li>
+      <li>หัวหน้าทีม Food Defense และ Food Safety Team Leader ไปที่จุดเกิดเหตุเพื่อพิจารณาหลักฐาน</li>
+      <li>ไม่พบอันตราย → บันทึก FRM-QAS-006 (CAR-PAR) แล้วปิด CAR</li>
+      <li>พบอันตราย → ประชุมทีม Food Defense <b>ภายใน 24 ชั่วโมง</b> และหน่วยงานที่เกี่ยวข้องจำกัดปัญหาให้ครอบคลุมทั้งห่วงโซ่อาหาร</li>
+      <li>สินค้าได้รับผลกระทบ → QA ประสานคลังสินค้าเพื่อกักกัน จำกัดปัญหา และสุ่มตรวจมากกว่ามาตรฐาน</li>
+      <li>แก้ไข ติดตามผล ปิด CAR และทบทวน TACCP เพื่อไม่ให้เกิดซ้ำ</li>
+    </ol>
+  </section>
+
+  <section class="sec">
+    <h2 class="hi"><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-clip"/></svg></span>การเฝ้าระวังที่ทำอยู่เป็นประจำ</h2>
+    <div class="table-scroll">
+    <table class="freq">
+      <tr><th>กิจกรรม</th><th>ความถี่</th><th>บันทึก</th></tr>
+      <tr><td><svg class="ic" aria-hidden="true"><use href="#i-clip"/></svg><span>ตรวจพื้นที่จุดเสี่ยง (Restricted area)</span></td><td>อย่างน้อยเดือนละครั้ง</td><td>FRM-SHE-087</td></tr>
+      <tr><td><svg class="ic" aria-hidden="true"><use href="#i-cam"/></svg><span>ตรวจกล้อง CCTV (มุม ความคมชัด ความสะอาด)</span></td><td>อย่างน้อยเดือนละครั้ง</td><td>FRM-HRG-083</td></tr>
+      <tr><td><svg class="ic" aria-hidden="true"><use href="#i-file"/></svg><span>ส่งบันทึกเข้า-ออกบุคคลภายนอกให้หัวหน้าทีม/HR</span></td><td>อย่างน้อยเดือนละครั้ง</td><td>FRM-SHE-081, FRM-HRG-088</td></tr>
+      <tr><td><svg class="ic" aria-hidden="true"><use href="#i-siren"/></svg><span>ซ้อมสถานการณ์ก่อการร้ายทางอาหาร</span></td><td>อย่างน้อยปีละครั้ง</td><td>เอกสารการซ้อม Food Defense</td></tr>
+      <tr><td><svg class="ic" aria-hidden="true"><use href="#i-refresh"/></svg><span>ปรับปรุงการประเมิน TACCP</span></td><td>ทุก 1 ปี หรือเมื่อได้รับแจ้งเหตุอันตราย</td><td>FRM-SHE-089</td></tr>
+    </table>
+    </div>
+    <p class="ref" style="margin-top:10px">รปภ. ต้องผ่านอบรมปีละครั้ง มีประสบการณ์อย่างน้อย 1 ปี และไม่มีประวัติอาชญากรรม · ผู้รับจ้างรถขนส่งต้องใช้รถสะอาด ไม่มีกลิ่นแรง ตรวจการปิดล็อกตู้ก่อนเคลื่อนย้าย ห้ามจอดที่เปลี่ยว ขนส่งในเส้นทางที่กำหนดหรือมี GPS ติดตาม</p>
+  </section>
+
+  <button class="cta" onclick="switchTab('quiz')">ไปทำแบบทดสอบ</button>
+</div>
+</main>
+
+<!-- ================= QUIZ ================= -->
+<main class="tab-content" id="tab-quiz">
+<div class="wrap">
+  <div class="quiz-head">
+    <h2>แบบทดสอบ EP.09</h2>
+    <span>5 ข้อ · ต้องถูกครบ 100% จึงได้ 5 Token</span>
+  </div>
+
+  <div class="card" id="emp-card">
+    <h3>เลือกชื่อของคุณก่อนเริ่ม</h3>
+    <label class="lbl" for="emp-select">ชื่อพนักงาน</label>
+    <select id="emp-select" onchange="onEmpChange()"><option value="">— เลือกชื่อ —</option></select>
+    <div class="err" id="err-emp">กรุณาเลือกชื่อก่อนเริ่มทำแบบทดสอบ</div>
+    <div class="row2">
+      <div><label class="lbl">รหัสพนักงาน</label><input type="text" id="emp-id" readonly placeholder="แสดงอัตโนมัติ"></div>
+      <div><label class="lbl">แผนก</label><input type="text" id="emp-sec" readonly placeholder="แสดงอัตโนมัติ"></div>
+    </div>
+    <button class="btn-main" onclick="startQuiz()">เริ่มทำแบบทดสอบ</button>
+  </div>
+
+  <div class="emp-banner" id="emp-banner">
+    <div><div class="n" id="b-name"></div><div class="s" id="b-sub"></div></div>
+    <button class="edit-btn" id="edit-btn" onclick="editEmp()">เปลี่ยนชื่อ</button>
+  </div>
+
+  <div class="card" id="quiz-area">
+    <div class="progress"><i id="prog"></i></div>
+    <div class="dots" id="dots"></div>
+    <div class="q-meta" id="q-meta"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="opts" id="opts"></div>
+    <div class="qnav">
+      <button class="nav-btn" id="prev" onclick="goQ(-1)">ก่อนหน้า</button>
+      <span class="count" id="count"></span>
+      <button class="nav-btn" id="next" onclick="goQ(1)">ถัดไป</button>
+    </div>
+    <button class="btn-main" id="submit" onclick="submitAll()" disabled>ส่งคำตอบ</button>
+  </div>
+
+  <div class="card" id="result">
+    <div class="r-emblem" id="r-emblem"></div>
+    <div class="r-score" id="r-score"></div>
+    <div class="r-chip">คะแนน (5 ข้อ)</div>
+    <div class="r-meter" id="r-meter"></div>
+    <div class="r-msg" id="r-msg"></div>
+    <div id="r-token"></div>
+    <div id="r-note"></div>
+    <div class="save wait" id="r-save"></div>
+    <div class="res-actions" id="r-actions"></div>
+  </div>
+</div>
+</main>
+
+<footer>Siam Tohcello Co., Ltd. · You can trust us because we care</footer>
+
+<script>
+// ===== ตั้งค่า: วาง URL ของ Apps Script Web App (ลงท้าย /exec) =====
+const SHEET_URL = 'PASTE_APPS_SCRIPT_URL_HERE';
+const EP = 'EP.09';
+
+const EMPLOYEES = [
+  {id:"1402049", title:"Ms.", name:"Supanee", surname:"Mangsa", section:"ACC"},
+  {id:"1402050", title:"Ms.", name:"Paiwan", surname:"Dongkaew", section:"ACC"},
+  {id:"1702111", title:"Ms.", name:"Chawanlak", surname:"Sangcha", section:"ACC"},
+  {id:"2202135", title:"Ms.", name:"Punnapha", surname:"Suypongpun", section:"ACC"},
+  {id:"9000016", title:"Ms.", name:"Intuon", surname:"Thawornsawat", section:"ACC"},
+  {id:"2500158", title:"Mr.", name:"Chanitpol", surname:"Ngamwutikul", section:"BD"},
+  {id:"2102126", title:"Ms.", name:"Parichat", surname:"Khumkhum", section:"HRG"},
+  {id:"2500156", title:"Mr.", name:"Prasert", surname:"Urai", section:"HRG"},
+  {id:"9000021", title:"Ms.", name:"Arisara", surname:"Boonsit", section:"HRG"},
+  {id:"9000022", title:"Ms.", name:"Sirithorn", surname:"Chaisaree", section:"HRG"},
+  {id:"9000025", title:"Ms.", name:"Sirilak", surname:"Phonphak", section:"HRG"},
+  {id:"1502074", title:"Ms.", name:"Yani", surname:"Wachiranuntagorn", section:"MKT"},
+  {id:"1702102", title:"Ms.", name:"Siriporn", surname:"Asawakosinchai", section:"MKT"},
+  {id:"1702103", title:"Ms.", name:"Duangrutai", surname:"Vongpunsua", section:"MKT"},
+  {id:"1702105", title:"Ms.", name:"Supanan", surname:"Sangtipkanya", section:"MKT"},
+  {id:"2301142", title:"Mr.", name:"Sarit", surname:"Sukwattanajaroon", section:"MKT"},
+  {id:"2402148", title:"Ms.", name:"Nattawan", surname:"Petchsang", section:"MKT"},
+  {id:"2600162", title:"Ms.", name:"Sudaporn", surname:"Rodpai", section:"MKT"},
+  {id:"1301009", title:"Mr.", name:"Napon", surname:"Thong-In", section:"MTS"},
+  {id:"2600163", title:"Mr.", name:"Kittiphong", surname:"Raksakom", section:"MTS"},
+  {id:"1401040", title:"Mr.", name:"Prattana", surname:"Krodphan", section:"MTS"},
+  {id:"1401067", title:"Mr.", name:"Prasong", surname:"Panprom", section:"MTS"},
+  {id:"2600160", title:"Mr.", name:"Patomchai", surname:"Chaichana", section:"MTS"},
+  {id:"9000023", title:"Ms.", name:"Mewadee", surname:"Kongsaeng", section:"MTS"},
+  {id:"1301016", title:"Mr.", name:"Somphong", surname:"Bubpharak", section:"PRS A"},
+  {id:"1401069", title:"Mr.", name:"Saranyu", surname:"Boonrux", section:"PRS A"},
+  {id:"1301038", title:"Mr.", name:"Yutpichai", surname:"Prajong", section:"PRS A"},
+  {id:"1601090", title:"Mr.", name:"Wutthiphong", surname:"Wilai", section:"PRS A"},
+  {id:"1401059", title:"Mr.", name:"Kittisak", surname:"Khantee", section:"PRS A"},
+  {id:"2301141", title:"Mr.", name:"Wanuson", surname:"Thopason", section:"PRS A"},
+  {id:"2301140", title:"Mr.", name:"Wanchai", surname:"Hongloy", section:"PRS A"},
+  {id:"1401051", title:"Mr.", name:"Aekkapan", surname:"Santhawinai", section:"PRS A"},
+  {id:"1601095", title:"Mr.", name:"Phodsakon", surname:"Aedeang", section:"PRS A"},
+  {id:"9000009", title:"Mr.", name:"Niphon", surname:"Dutsadi", section:"PRS A"},
+  {id:"9000011", title:"Mr.", name:"Pongsagon", surname:"Nilrasamee", section:"PRS A"},
+  {id:"9000019", title:"Mr.", name:"Aerawan", surname:"Arunsri", section:"PRS A"},
+  {id:"9000029", title:"Mr.", name:"Sittichai", surname:"Aroonrat", section:"PRS A"},
+  {id:"9000033", title:"Mr.", name:"Chetsada", surname:"Homniam", section:"PRS A"},
+  {id:"1301018", title:"Mr.", name:"Setthaphat", surname:"Namsiphan", section:"PRS B"},
+  {id:"1301037", title:"Mr.", name:"Wutipol", surname:"Praneetponkrang", section:"PRS B"},
+  {id:"1301033", title:"Mr.", name:"Sarawoot", surname:"Najampa", section:"PRS B"},
+  {id:"2101127", title:"Mr.", name:"Somchai", surname:"Tungmundee", section:"PRS B"},
+  {id:"1501080", title:"Mr.", name:"Amorn", surname:"Kheamphimai", section:"PRS B"},
+  {id:"1701108", title:"Mr.", name:"Mongkhon", surname:"Sangsai", section:"PRS B"},
+  {id:"2500159", title:"Mr.", name:"Chattarin", surname:"Phomdom", section:"PRS B"},
+  {id:"2401150", title:"Mr.", name:"Khetdaen", surname:"Decha", section:"PRS B"},
+  {id:"2500157", title:"Mr.", name:"Thawatchai", surname:"Chaisawang", section:"PRS B"},
+  {id:"9000008", title:"Mr.", name:"Chamnan", surname:"Pachana", section:"PRS B"},
+  {id:"9000010", title:"Mr.", name:"Thanakorn", surname:"Phannoi", section:"PRS B"},
+  {id:"9000024", title:"Mr.", name:"Banpot", surname:"Dudsadee", section:"PRS B"},
+  {id:"9000028", title:"Mr.", name:"Thanakrid", surname:"Ruangsakul", section:"PRS B"},
+  {id:"9000032", title:"Mr.", name:"Jackarin", surname:"Chantayang", section:"PRS B"},
+  {id:"1301024", title:"Mr.", name:"Pichit", surname:"Viekthaisong", section:"PRS C"},
+  {id:"1401046", title:"Mr.", name:"Piya", surname:"Lamul", section:"PRS C"},
+  {id:"1501078", title:"Mr.", name:"Weerayut", surname:"Piakot", section:"PRS C"},
+  {id:"1301032", title:"Mr.", name:"Wichai", surname:"Chaikeeree", section:"PRS C"},
+  {id:"1301029", title:"Mr.", name:"Wuttichai", surname:"Nukhuntod", section:"PRS C"},
+  {id:"1401071", title:"Mr.", name:"Udomporn", surname:"Chaisawang", section:"PRS C"},
+  {id:"2600161", title:"Mr.", name:"Anawin", surname:"Khangklang", section:"PRS C"},
+  {id:"1701110", title:"Mr.", name:"Phanuwat", surname:"Suwannawong", section:"PRS C"},
+  {id:"2301139", title:"Mr.", name:"Weerachai", surname:"Yothina", section:"PRS C"},
+  {id:"9000006", title:"Mr.", name:"Praditpong", surname:"Sidama", section:"PRS C"},
+  {id:"9000012", title:"Mr.", name:"Kitnarong", surname:"Kankao", section:"PRS C"},
+  {id:"9000014", title:"Mr.", name:"Chanasuek", surname:"Prathumchat", section:"PRS C"},
+  {id:"9000015", title:"Mr.", name:"Chalongkon", surname:"Sila", section:"PRS C"},
+  {id:"9000027", title:"Mr.", name:"Bunyakon", surname:"Phunphoem", section:"PRS C"},
+  {id:"1401068", title:"Mr.", name:"Teerapong", surname:"Sarnpisuit", section:"PRS Day"},
+  {id:"1301015", title:"Mr.", name:"Vasin", surname:"Aphajid", section:"PRS Day"},
+  {id:"2201132", title:"Mr.", name:"Thanapol", surname:"Jareansakul", section:"PRS Day"},
+  {id:"1502085", title:"Ms.", name:"Kanjana", surname:"Serksiri", section:"PRS Day"},
+  {id:"2302144", title:"Ms.", name:"Kornchayada", surname:"Auycharoen", section:"QAS"},
+  {id:"2502152", title:"Ms.", name:"Anthiya", surname:"Kittichotteerakorn", section:"QAS"},
+  {id:"9000030", title:"Ms.", name:"Pornpan", surname:"Deetsree", section:"QAS"},
+  {id:"1401064", title:"Mr.", name:"Bunman", surname:"Noyphang", section:"QCS"},
+  {id:"1301028", title:"Mr.", name:"Bundit", surname:"Lamuang", section:"QCS"},
+  {id:"1301027", title:"Mr.", name:"Chockchai", surname:"Meelap", section:"QCS"},
+  {id:"1301022", title:"Mr.", name:"Suwan", surname:"Aungsan", section:"QCS"},
+  {id:"2002125", title:"Ms.", name:"Saranya", surname:"Suwansawang", section:"QCS"},
+  {id:"1302019", title:"Ms.", name:"Kanokphat", surname:"Phonthon", section:"SCM"},
+  {id:"1602092", title:"Ms.", name:"Pantip", surname:"Prakongpuak", section:"SCM"},
+  {id:"1702100", title:"Ms.", name:"Jutarat", surname:"Ariyadip", section:"SCM"},
+  {id:"2102129", title:"Ms.", name:"Saifon", surname:"Suriyanon", section:"SCM"},
+  {id:"2500154", title:"Ms.", name:"Nonthanan", surname:"Nonthakot", section:"SCM"},
+  {id:"9000005", title:"Mr.", name:"Sarawut", surname:"Nalampang", section:"SCM"},
+  {id:"9000007", title:"Mr.", name:"Chumpol", surname:"Huaykrod", section:"SCM"},
+  {id:"9000013", title:"Mr.", name:"Weerayut", surname:"Jatturong", section:"SCM"},
+  {id:"9000017", title:"Mr.", name:"Thodsaphon", surname:"Kunma", section:"SCM"},
+  {id:"9000018", title:"Ms.", name:"Tichada", surname:"Pungpee", section:"SCM"},
+  {id:"9000026", title:"Mr.", name:"Sirawit", surname:"Wongphabut", section:"SCM"},
+  {id:"1802008", title:"Ms.", name:"Orn-in", surname:"Jiamket", section:"SHE"},
+  {id:"2202133", title:"Ms.", name:"Nararut", surname:"Arunsen", section:"SHE"}
+];
+
+const LETTERS = ['A','B','C','D'];
+const EMBLEM_PASS = '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="#FFF6D9"/><path d="M60 16l34 12v26c0 25-15 42-34 50-19-8-34-25-34-50V28z" fill="#14285C"/><path d="M60 26l25 9v19c0 19-11 32-25 39-14-7-25-20-25-39V35z" fill="#22407F"/><path d="M46 60l10 10 19-20" fill="none" stroke="#FFC531" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="98" cy="22" r="5" fill="#FFC531"/><circle cx="18" cy="34" r="3.5" fill="#D7262E"/><circle cx="104" cy="86" r="3" fill="#D7262E"/></svg>';
+const TIERS = {"4": {"color": "#E08A00", "e": "<svg viewBox=\"0 0 120 120\" aria-hidden=\"true\"><circle cx=\"60\" cy=\"60\" r=\"56\" fill=\"#FFF3D6\"/><path d=\"M60 16l34 12v26c0 25-15 42-34 50-19-8-34-25-34-50V28z\" fill=\"#F29F05\"/><path d=\"M60 26l25 9v19c0 19-11 32-25 39-14-7-25-20-25-39V35z\" fill=\"#E08A00\"/><circle cx=\"60\" cy=\"58\" r=\"16\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"60\" cy=\"58\" r=\"6\" fill=\"#fff\"/><path d=\"M74 44l9-9\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>", "h": "เกือบแล้ว! อีกแค่ 1 ข้อเท่านั้น", "p": "คุณเข้าใจ Food Defense เกือบครบแล้ว ลองทบทวนอีกนิดแล้วทำใหม่ให้ได้ 5/5"}, "3": {"color": "#E0661F", "e": "<svg viewBox=\"0 0 120 120\" aria-hidden=\"true\"><circle cx=\"60\" cy=\"60\" r=\"56\" fill=\"#FFEBDD\"/><path d=\"M60 16l34 12v26c0 25-15 42-34 50-19-8-34-25-34-50V28z\" fill=\"#F07A2E\"/><path d=\"M60 26l25 9v19c0 19-11 32-25 39-14-7-25-20-25-39V35z\" fill=\"#D9621B\"/><path d=\"M42 72l12-12 8 8 16-18\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M68 50h10v10\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>", "h": "มาถูกทางแล้ว! เกินครึ่งแล้ว", "p": "ทบทวนเนื้อหาอีกรอบ โดยเฉพาะหัวข้อที่ยังไม่มั่นใจ แล้วลองทำใหม่ให้ได้ 5/5"}, "2": {"color": "#D7262E", "e": "<svg viewBox=\"0 0 120 120\" aria-hidden=\"true\"><circle cx=\"60\" cy=\"60\" r=\"56\" fill=\"#FDECEC\"/><path d=\"M60 16l34 12v26c0 25-15 42-34 50-19-8-34-25-34-50V28z\" fill=\"#E5484D\"/><path d=\"M60 26l25 9v19c0 19-11 32-25 39-14-7-25-20-25-39V35z\" fill=\"#C9343A\"/><path d=\"M60 48c-5-4-12-5-18-4v26c6-1 13 0 18 4 5-4 12-5 18-4V44c-6-1-13 0-18 4z\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M60 48v26\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>", "h": "ยังต้องทบทวนอีกหน่อย", "p": "อ่านเนื้อหา Food Defense ให้ครบทุกหัวข้อ แล้วกลับมาทำแบบทดสอบใหม่"}, "1": {"color": "#B91E25", "e": "<svg viewBox=\"0 0 120 120\" aria-hidden=\"true\"><circle cx=\"60\" cy=\"60\" r=\"56\" fill=\"#FDE3E4\"/><path d=\"M60 16l34 12v26c0 25-15 42-34 50-19-8-34-25-34-50V28z\" fill=\"#D7262E\"/><path d=\"M60 26l25 9v19c0 19-11 32-25 39-14-7-25-20-25-39V35z\" fill=\"#B91E25\"/><path d=\"M76 58a16 16 0 1 1-5-11.6\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M73 40v8h-8\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>", "h": "เริ่มต้นใหม่อีกครั้งนะ", "p": "ลองอ่านเนื้อหาตั้งแต่ต้นอย่างช้า ๆ แล้วทำแบบทดสอบใหม่ คุณทำได้แน่นอน"}};
+const COIN = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#E8A317"/><circle cx="32" cy="32" r="26" fill="#FFC531"/><circle cx="32" cy="32" r="21" fill="none" stroke="#E8A317" stroke-width="2"/><path d="M32 17l12 4v9c0 9-5 15-12 18-7-3-12-9-12-18v-9z" fill="#14285C"/><path d="M27 32l4 4 7-7" fill="none" stroke="#FFC531" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+const QS = [
+  { q:'ตามระเบียบ WPD-SHE-025 คำว่า "Food Defense" หมายถึงข้อใด',
+    o:['การป้องกันการปนเปื้อนที่เกิดขึ้นโดยไม่ตั้งใจระหว่างการผลิตเท่านั้น',
+       'กระบวนการป้องกันการเจตนาก่อการร้ายทางบรรจุภัณฑ์อาหารตลอดห่วงโซ่อาหาร จากทั้งบุคคลภายในและภายนอก',
+       'การป้องกันเฉพาะบุคคลภายนอกไม่ให้เข้ามาในโรงงาน',
+       'การตรวจสอบคุณภาพฟิล์มก่อนส่งมอบให้ลูกค้า'], a:1 },
+  { q:'ผู้มาติดต่อจากภายนอกต้องทำอย่างไรก่อนเข้าโรงงาน',
+    o:['แจ้งชื่อกับ รปภ. ด้วยวาจาก็เพียงพอ',
+       'ให้พนักงานที่รู้จักพาเข้าไปได้เลยโดยไม่ต้องบันทึก',
+       'แลกบัตรเฉพาะกรณีที่จะเข้าพื้นที่ผลิตเท่านั้น',
+       'แลกบัตรที่มีรูปถ่าย เช่น บัตรประชาชน ใบขับขี่ พาสปอร์ต กับบัตร VISITOR และติดบัตรในจุดที่มองเห็นได้ชัดเจน'], a:3 },
+  { q:'ขณะทำงานในสายการผลิต (พื้นที่สีแดง) คุณพบคนใส่ชุดต่างจากพนักงาน หน้าตาไม่คุ้น และไม่มีใครแจ้งว่าจะมีผู้เยี่ยมชม ควรทำอย่างไร',
+    o:['ไม่อนุญาตให้เข้าพื้นที่ และนำตัวส่ง รปภ. เพื่อดำเนินการต่อ',
+       'ปล่อยไว้ เพราะเขาผ่านป้อม รปภ. มาแล้ว',
+       'ถ่ายรูปเก็บไว้ แล้วค่อยรายงานในการประชุมประจำเดือน',
+       'พาเดินชมพื้นที่ด้วยตัวเองจนกว่าจะออกไป'], a:0 },
+  { q:'พื้นที่หนึ่งได้คะแนน "โอกาสเข้าถึงพื้นที่" = 4 (เกิดง่าย) และ "ความรุนแรง" = 3 (เสียหายมาก) ผลการประเมินคือข้อใด',
+    o:['7 คะแนน ความเสี่ยงปานกลาง',
+       '12 คะแนน ความเสี่ยงต่ำ',
+       '12 คะแนน ความเสี่ยงสูง จัดเป็นพื้นที่หวงห้าม (Restricted area)',
+       '4 คะแนน ความเสี่ยงปานกลาง'], a:2 },
+  { q:'หากพบหลักฐานชัดเจนว่ามีการปนเปื้อนโดยเจตนา สิ่งแรกที่ต้องทำคืออะไร',
+    o:['รอหัวหน้าทีม Food Defense มาตรวจก่อน แล้วจึงหยุดงาน',
+       'ระงับเหตุทันทีและจำกัดปัญหา แล้วรีบแจ้งหัวหน้างาน สมาชิก Food Defense และหัวหน้าทีม Food Defense',
+       'เปิด CAR แล้วทำงานต่อจนจบกะ',
+       'ทิ้งชิ้นงานที่สงสัยทันทีเพื่อไม่ให้ปนกับงานอื่น'], a:1 }
+];
+
+let emp = null, cur = 0, answers = Array(QS.length).fill(null), submitted = false;
+
+/* ---------- tabs ---------- */
+function switchTab(t){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  document.getElementById('btn-'+t).classList.add('active');
+  window.scrollTo({top:document.querySelector('.tabs').offsetTop});
+}
+
+/* ---------- risk matrix ---------- */
+(function buildMatrix(){
+  const m = document.getElementById('matrix');
+  const likeLbl = {4:'เกิดง่าย (4)',3:'เกิดปานกลาง (3)',2:'เกิดยาก (2)',1:'เกิดยากมาก (1)'};
+  const sevLbl  = {4:'เสียหายรุนแรง (4)',3:'เสียหายมาก (3)',2:'เสียหายชัดเจน (2)',1:'เสียหายเล็กน้อย (1)'};
+  const sevTxt  = {4:'มูลค่าทรัพย์สินหรือผลิตภัณฑ์เสียหาย > 5 ล้านบาทขึ้นไป หรือบาดเจ็บสาหัส หรือเสียชีวิตมากกว่า 1 รายขึ้นไป ปิดกิจการ',3:'มูลค่าเสียหาย 1,000,001–5,000,000 บาท หรือบาดเจ็บปานกลาง ถึงขั้นหยุดงาน > 7 วันขึ้นไป',2:'มูลค่าเสียหาย 100,001–1,000,000 บาท หรือบาดเจ็บเล็กน้อย ถึงขั้นหยุดงาน 1–7 วัน แต่ยังกอบกู้ชื่อเสียงได้',1:'มูลค่าเสียหาย < 100,000 บาท ไม่มีคนเจ็บป่วย/บาดเจ็บ ไม่ถึงขั้นหยุดงาน แต่ยังกอบกู้ชื่อเสียงได้'};
+  let h = '<div class="mx-h">ความรุนแรง ↓ / โอกาสเข้าถึงพื้นที่ →</div>';
+  [4,3,2,1].forEach(l=>h+='<div class="mx-h">'+likeLbl[l]+'</div>');
+  [4,3,2,1].forEach(s=>{
+    h+='<div class="mx-h">'+sevLbl[s]+'</div>';
+    [4,3,2,1].forEach(l=>{
+      const v=s*l, c=v>=8?'hi':v>=4?'md':'lo';
+      h+='<button class="mx-cell '+c+'" data-s="'+s+'" data-l="'+l+'" aria-label="คะแนน '+v+'">'+v+'</button>';
+    });
+  });
+  m.innerHTML = h;
+  m.addEventListener('click',e=>{
+    const b=e.target.closest('.mx-cell'); if(!b) return;
+    m.querySelectorAll('.mx-cell').forEach(x=>x.classList.remove('sel')); b.classList.add('sel');
+    const s=+b.dataset.s,l=+b.dataset.l,v=s*l;
+    const lvl=v>=8?'<b style="color:#B91E25">ความเสี่ยงสูง → กำหนดเป็นพื้นที่หวงห้าม</b>':v>=4?'<b style="color:#8A6400">ความเสี่ยงปานกลาง</b>':'<b style="color:#0F7A4C">ความเสี่ยงต่ำ</b>';
+    document.getElementById('mx-out').innerHTML='โอกาส '+l+' × ความรุนแรง '+s+' = <b>'+v+' คะแนน</b> · '+lvl+'<br><span class="ref">ความรุนแรง '+s+': '+sevTxt[s]+'</span>';
+  });
+})();
+
+/* ---------- employee select ---------- */
+(function fillEmp(){
+  const sel = document.getElementById('emp-select');
+  const groups = {};
+  EMPLOYEES.forEach(e=>{(groups[e.section]=groups[e.section]||[]).push(e);});
+  Object.keys(groups).sort().forEach(sec=>{
+    const g=document.createElement('optgroup'); g.label=sec;
+    groups[sec].sort((a,b)=>a.name.localeCompare(b.name)).forEach(e=>{
+      const o=document.createElement('option'); o.value=e.id; o.textContent=fullName(e); g.appendChild(o);
+    });
+    sel.appendChild(g);
+  });
+})();
+function fullName(e){return e.title+' '+e.name+' '+e.surname;}
+function onEmpChange(){
+  const e = EMPLOYEES.find(x=>x.id===document.getElementById('emp-select').value);
+  document.getElementById('emp-id').value = e?e.id:'';
+  document.getElementById('emp-sec').value = e?e.section:'';
+  document.getElementById('err-emp').style.display='none';
+}
+function startQuiz(){
+  const e = EMPLOYEES.find(x=>x.id===document.getElementById('emp-select').value);
+  if(!e){document.getElementById('err-emp').style.display='block';return;}
+  emp = e;
+  document.getElementById('b-name').textContent = fullName(e);
+  document.getElementById('b-sub').textContent = e.id+' · แผนก '+e.section;
+  document.getElementById('emp-card').style.display='none';
+  document.getElementById('emp-banner').style.display='flex';
+  document.getElementById('quiz-area').style.display='block';
+  renderQ();
+}
+function editEmp(){
+  if(submitted) return;
+  document.getElementById('emp-card').style.display='block';
+  document.getElementById('emp-banner').style.display='none';
+  document.getElementById('quiz-area').style.display='none';
+}
+
+/* ---------- quiz ---------- */
+function renderQ(){
+  const Q = QS[cur];
+  document.getElementById('q-meta').textContent = 'ข้อที่ '+(cur+1)+' จาก '+QS.length;
+  document.getElementById('q-text').textContent = Q.q;
+  document.getElementById('opts').innerHTML = Q.o.map((t,i)=>
+    '<button class="opt'+(answers[cur]===i?' picked':'')+'" onclick="pick('+i+')"><span class="L">'+LETTERS[i]+'</span><span>'+t+'</span></button>'
+  ).join('');
+  document.getElementById('dots').innerHTML = QS.map((_,i)=>
+    '<button class="dot'+(answers[i]!==null?' done':'')+(i===cur?' cur':'')+'" onclick="jump('+i+')" aria-label="ข้อ '+(i+1)+'">'+(i+1)+'</button>'
+  ).join('');
+  const n = answers.filter(a=>a!==null).length;
+  document.getElementById('prog').style.width = (n/QS.length*100)+'%';
+  document.getElementById('count').textContent = 'ตอบแล้ว '+n+' / '+QS.length;
+  document.getElementById('prev').disabled = cur===0;
+  document.getElementById('next').disabled = cur===QS.length-1;
+  document.getElementById('submit').disabled = n<QS.length;
+}
+function pick(i){
+  answers[cur]=i; renderQ();
+  if(cur<QS.length-1) setTimeout(()=>{cur++;renderQ();},250);
+}
+function goQ(d){cur=Math.min(QS.length-1,Math.max(0,cur+d));renderQ();}
+function jump(i){cur=i;renderQ();}
+
+function submitAll(){
+  if(answers.some(a=>a===null)) return;
+  submitted = true;
+  document.getElementById('edit-btn').style.display='none';
+  const correct = answers.map((a,i)=>a===QS[i].a);
+  const score = correct.filter(Boolean).length;
+  const pct = Math.round(score/QS.length*100);
+  const pass = pct===100;
+
+  document.getElementById('quiz-area').style.display='none';
+  document.getElementById('result').style.display='block';
+  const tier = pass ? null : TIERS[Math.max(1,score)];
+  const res = document.getElementById('result');
+  res.style.setProperty('--tier', pass ? '#169A62' : tier.color);
+  document.getElementById('r-emblem').innerHTML = pass ? EMBLEM_PASS : tier.e;
+  const sc = document.getElementById('r-score');
+  sc.textContent = score+'/'+QS.length; sc.className='r-score '+(pass?'pass':'fail');
+  document.getElementById('r-meter').innerHTML = QS.map((_,i)=>'<i class="'+(i<score?'on':'')+'"></i>').join('');
+  document.getElementById('r-msg').innerHTML = pass
+    ? '<b>ยอดเยี่ยม! ผ่านแบบทดสอบ 100%</b><br>คุณเข้าใจมาตรการ Food Defense ของ STC อย่างสมบูรณ์แบบ'
+    : '<b style="color:'+tier.color+'">'+tier.h+'</b><br>'+tier.p;
+  document.getElementById('r-token').innerHTML = pass
+    ? '<div class="r-token">'+COIN+'<div><div class="t1">รับ 5 Token!</div><div class="t2">รางวัลสำหรับคะแนน 100%</div></div></div>' : '';
+  document.getElementById('r-note').innerHTML = pass ? ''
+    : '<div class="r-retry-note"><svg class="ic" aria-hidden="true"><use href="#i-refresh"/></svg><div><b>ทำแบบทดสอบใหม่จนกว่าจะได้ 5/5</b><br>ทำซ้ำได้ไม่จำกัดครั้ง และจะได้รับ 5 Token เมื่อตอบถูกครบทุกข้อ</div></div>';
+  const retryBtn = '<button class="btn-retry'+(pass?'':' primary')+'" onclick="retry()"><svg class="ic" aria-hidden="true"><use href="#i-refresh"/></svg>ทำแบบทดสอบใหม่</button>';
+  document.getElementById('r-actions').innerHTML = pass ? retryBtn
+    : '<button class="btn-retry" onclick="reviewContent()"><svg class="ic" aria-hidden="true"><use href="#i-file"/></svg>ทบทวนเนื้อหา</button>'+retryBtn;
+  window.scrollTo({top:document.querySelector('.tabs').offsetTop});
+
+  sendToSheet(score, pct, pass, correct);
+}
+
+function sendToSheet(score, pct, pass, correct){
+  const box = document.getElementById('r-save');
+  if(!SHEET_URL || SHEET_URL.indexOf('PASTE')===0){
+    box.className='save warn'; box.innerHTML='<svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>ยังไม่ได้ตั้งค่า SHEET_URL ผลจึงยังไม่ถูกบันทึก (โหมดทดสอบ)'; return;
+  }
+  box.className='save wait'; box.innerHTML='<span class="spin"></span>กำลังบันทึกผลลง Google Sheets…';
+  const p = {
+    ep:EP, empId:emp.id, empName:fullName(emp), section:emp.section,
+    score:score, total:QS.length, percent:pct+'%', pass:pass?'ผ่าน':'ไม่ผ่าน'
+  };
+  answers.forEach((a,i)=>{ p['q'+(i+1)] = correct[i]; p['a'+(i+1)] = LETTERS[a]; });
+  const f = document.createElement('iframe');
+  f.style.display='none';
+  let done=false;
+  const ok=()=>{ if(done) return; done=true; box.className='save done'; box.innerHTML='<svg class="ic" aria-hidden="true"><use href="#i-cloudok"/></svg>บันทึกผลลง Google Sheets เรียบร้อยแล้ว'; };
+  f.onload = ok;
+  setTimeout(ok, 5000);
+  f.src = SHEET_URL+'?'+new URLSearchParams(p).toString();
+  document.body.appendChild(f);
+}
+
+function retry(){
+  answers = Array(QS.length).fill(null); cur=0; submitted=false;
+  document.getElementById('result').style.display='none';
+  document.getElementById('quiz-area').style.display='block';
+  document.getElementById('edit-btn').style.display='';
+  renderQ();
+}
+function reviewContent(){ retry(); switchTab('learn'); }
+</script>
+</body>
+</html>
